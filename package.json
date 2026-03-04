@@ -1,0 +1,8 @@
+{
+  "name": "portugal-elite-ecosystem",
+  "private": true,
+  "workspaces": [
+    "app",
+    "packages/*"
+  ]
+}
