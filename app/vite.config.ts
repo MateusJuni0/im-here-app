@@ -9,7 +9,6 @@ export default defineConfig({
     tailwindcss(),
   ],
   build: {
-    outDir: '../dist',
     target: 'ES2020',
     minify: 'terser',
     terserOptions: {

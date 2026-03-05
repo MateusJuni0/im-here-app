@@ -6,7 +6,8 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "cd app && npm install --legacy-peer-deps && npm run build",
+    "build": "cd app && npm install --legacy-peer-deps && npm run build && cd .. && npm run copy-dist",
+    "copy-dist": "node -e \"const fs=require('fs'); fs.rmSync('dist', {recursive:true, force:true}); fs.cpSync('app/dist', 'dist', {recursive:true});\"",
     "install-all": "npm install --legacy-peer-deps"
   }
 }
