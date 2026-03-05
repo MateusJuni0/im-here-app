@@ -1,25 +1,57 @@
-import { User, Settings, Crown, Activity, Box, LayoutTemplate as Layout, Compass as Navigation } from 'lucide-react'
+import { useState } from 'react'
+import { MoodOnboarding } from './components/MoodOnboarding'
+// import { ElitePassDashboard } from './components/ElitePassDashboard'
+// import { EliteShowcase } from './components/EliteShowcase'
+// import { ThreeDollhouse } from './components/ThreeDollhouse'
+// import { WrapperStatus } from './components/WrapperStatus'
+import { User, Settings, Crown, Activity, LayoutTemplate as Layout, Box, Compass as Navigation } from 'lucide-react'
+
+type Tab = 'mood' | 'elite' | 'showcase' | '3d' | 'wrapper'
 
 function App() {
+  const [activeTab, setActiveTab] = useState<Tab>('mood')
+
   return (
-    <div className="min-h-screen bg-[#0a0a15] text-white font-sans flex items-center justify-center">
+    <div className="min-h-screen bg-[#0a0a15] text-white font-sans selection:bg-gold/30">
       <div className="fixed top-0 left-0 z-[9999] bg-red-600 text-white p-2 text-[12px] font-bold">
-        🏛️ DANTE CORE - EMERGENCY DEBUG v1.0.7
+        🏛️ DANTE CORE - DEBUG v1.0.8 (Restoring Components)
       </div>
-      
-      <div className="text-center">
-        <h1 className="text-5xl font-bold text-gold mb-4">REACT ALIVE</h1>
-        <p className="text-gray-400">Se estás a ler isto, o build da Vercel passou e o React está funcional.</p>
-        <div className="mt-8 flex gap-4 justify-center">
-           <Activity className="text-gold" />
-           <Crown className="text-gold" />
-           <Box className="text-gold" />
-           <User className="text-gold" />
-           <Settings className="text-gold" />
-           <Layout className="text-gold" />
-           <Navigation className="text-gold" />
+
+      <nav className="fixed top-0 left-0 w-full p-6 flex justify-between items-center z-50 pointer-events-none">
+        <div className="text-xl font-bold tracking-widest text-[#D4AF37] uppercase drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]">
+          Elite
         </div>
-      </div>
+        <div className="flex gap-2 text-white pointer-events-auto bg-black/40 backdrop-blur-xl p-2 rounded-2xl border border-white/5">
+          <button onClick={() => setActiveTab('mood')} className={`p-2 transition-all rounded-xl ${activeTab === 'mood' ? 'text-[#D4AF37] bg-white/5' : 'text-gray-400 hover:text-white'}`} title="Mood Onboarding">
+            <Activity size={18} />
+          </button>
+          <button onClick={() => setActiveTab('wrapper')} className={`p-2 transition-all rounded-xl ${activeTab === 'wrapper' ? 'text-[#D4AF37] bg-white/5' : 'text-gray-400 hover:text-white'}`} title="Wrapper Status">
+            <Navigation size={18} />
+          </button>
+          <button onClick={() => setActiveTab('showcase')} className={`p-2 transition-all rounded-xl ${activeTab === 'showcase' ? 'text-[#D4AF37] bg-white/5' : 'text-gray-400 hover:text-white'}`} title="Netflix UI Showcase">
+            <Layout size={18} />
+          </button>
+          <button onClick={() => setActiveTab('3d')} className={`p-2 transition-all rounded-xl ${activeTab === '3d' ? 'text-[#D4AF37] bg-white/5' : 'text-gray-400 hover:text-white'}`} title="3D Dollhouse">
+            <Box size={18} />
+          </button>
+          <button onClick={() => setActiveTab('elite')} className={`p-2 transition-all rounded-xl ${activeTab === 'elite' ? 'text-[#D4AF37] bg-white/5' : 'text-gray-400 hover:text-white'}`} title="Elite Pass">
+            <Crown size={18} />
+          </button>
+        </div>
+        <div className="flex gap-4 pointer-events-auto">
+          <button className="p-2 text-gray-400 hover:text-[#D4AF37] transition-colors"><Settings size={18} /></button>
+          <button className="p-2 text-gray-400 hover:text-[#D4AF37] transition-colors"><User size={18} /></button>
+        </div>
+      </nav>
+
+      <main className="min-h-screen relative">
+        {activeTab === 'mood' && <div className="pt-24"><MoodOnboarding /></div>}
+        {/* Placeholder para evitar erro de TS enquanto os outros estão comentados */}
+        {activeTab === 'elite' && <div className="pt-40 text-center text-gray-500">Dashboard em manutenção...</div>}
+        {activeTab === 'showcase' && <div className="pt-40 text-center text-gray-500">Showcase em manutenção...</div>}
+        {activeTab === '3d' && <div className="pt-40 text-center text-gray-500">3D em manutenção...</div>}
+        {activeTab === 'wrapper' && <div className="pt-40 text-center text-gray-500">Wrapper em manutenção...</div>}
+      </main>
     </div>
   )
 }
