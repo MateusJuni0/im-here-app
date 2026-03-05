@@ -15,7 +15,7 @@ function App() {
     <div className="min-h-screen bg-[#0a0a15] text-white font-sans selection:bg-gold/30">
       {/* Teste de Vida do React */}
       <div className="fixed top-0 left-0 z-[9999] bg-red-600 text-white p-2 text-[12px] font-bold">
-        🏛️ DANTE CORE ACTIVE v1.0.2
+        🏛️ DANTE CORE ACTIVE v1.0.3 - REACT TEST
       </div>
 
       {/* Top Nav */}
