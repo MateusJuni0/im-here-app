@@ -1,5 +1,3 @@
-import 'reflect-metadata';
-import { injectable, inject } from 'inversify';
 import { VibeMeterManager } from './VibeMeterManager';
 
 // Tipos de dados para propriedades de luxo
@@ -21,7 +19,6 @@ interface ScoredProperty {
   vibeScore: number;
 }
 
-@injectable()
 export class PropertyHunterManager {
 
   private vibeMeter: VibeMeterManager;
@@ -35,7 +32,7 @@ export class PropertyHunterManager {
     { id: 'zap-2', title: 'Moradia de Charme com Jardim Privado', price: 4200000, area: 'Belém', location: { lat: 38.697, lon: -9.201 }, provider: 'ZAP' },
   ];
 
-  constructor(@inject(VibeMeterManager) vibeMeter: VibeMeterManager) {
+  constructor(vibeMeter: VibeMeterManager) {
     this.vibeMeter = vibeMeter;
     console.log('PropertyHunterManager initialized');
   }

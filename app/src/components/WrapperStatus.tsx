@@ -23,7 +23,7 @@ export const WrapperStatus = () => {
   }, [currentStep]);
 
   // Spring Physics configurations
-  const springConfig = {
+  const springConfig: any = {
     type: "spring" as const,
     stiffness: 250,
     damping: 20,

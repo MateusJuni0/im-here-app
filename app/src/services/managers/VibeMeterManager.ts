@@ -1,5 +1,3 @@
-import 'reflect-metadata';
-import { injectable } from 'inversify';
 
 // Interfaces para os dados que seriam obtidos via scraping
 interface TrafficData {
@@ -21,7 +19,6 @@ interface SocialPulseData {
 // Áreas de Lisboa a serem monitoradas
 type LisbonArea = 'Chiado' | 'Bairro Alto' | 'Belém';
 
-@injectable()
 export class VibeMeterManager {
 
   constructor() {
