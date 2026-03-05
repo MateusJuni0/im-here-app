@@ -52,7 +52,7 @@ export class ConciergeBufferManager {
     request.status = RequestStatus.FAILED;
     request.activeProvider = undefined;
 
-    this.escalateToConcierge(request, lastError?.message || 'ALL_PROVIDERS_FAILED');
+    this.escalateToConcierge(request.requestId, lastError?.message || 'ALL_PROVIDERS_FAILED', 'URGENT');
     
     return request;
   }
@@ -60,19 +60,19 @@ export class ConciergeBufferManager {
   /**
    * Adds the failed request to the Concierge Buffer queue for AI/Human resolution.
    */
-  private escalateToConcierge(request: UnifiedRequest, reason: string): ConciergeTask {
+  public escalateToConcierge(requestId: string, reason: string, severity: 'NORMAL' | 'URGENT' | 'CRITICAL' = 'URGENT'): ConciergeTask {
     const task: ConciergeTask = {
       taskId: `CT-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-      referenceRequestId: request.requestId,
+      referenceRequestId: requestId,
       failureReason: reason,
-      severity: 'URGENT', // Standard severity for mobility failure
+      severity,
       aiAgentAssigned: true, // We assume AI takes it first
-      resolutionStrategy: 'PHONE_CALL_SYNTHESIS', // e.g., calling local VIP driver services
+      resolutionStrategy: 'PHONE_CALL_SYNTHESIS', // e.g., calling local VIP driver/flight services
       status: 'QUEUED'
     };
 
     this.conciergeQueue.push(task);
-    console.log(`[ConciergeBuffer] Task ${task.taskId} created and queued for request ${request.requestId}. Strategy: ${task.resolutionStrategy}`);
+    console.log(`[ConciergeBuffer] Task ${task.taskId} created and queued for request ${requestId}. Strategy: ${task.resolutionStrategy}`);
     
     return task;
   }

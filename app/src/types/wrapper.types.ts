@@ -3,7 +3,10 @@ export enum ServiceProvider {
   BOLT = 'BOLT',
   IFOOD = 'IFOOD',
   THEFORK = 'THEFORK',
-  CONCIERGE = 'CONCIERGE'
+  CONCIERGE = 'CONCIERGE',
+  TAP = 'TAP',
+  EMIRATES = 'EMIRATES',
+  NETJETS = 'NETJETS'
 }
 
 export enum RequestStatus {
