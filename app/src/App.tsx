@@ -12,7 +12,12 @@ function App() {
   const [activeTab, setActiveTab] = useState<Tab>('elite')
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-gold/30">
+    <div className="min-h-screen bg-[#0a0a15] text-white font-sans selection:bg-gold/30">
+      {/* Teste de Vida do React */}
+      <div className="fixed top-0 left-0 z-[9999] bg-red-600 text-white p-2 text-[12px] font-bold">
+        🏛️ DANTE CORE ACTIVE v1.0.2
+      </div>
+
       {/* Top Nav */}
       <nav className="fixed top-0 left-0 w-full p-6 flex justify-between items-center z-50 pointer-events-none">
         <div className="text-xl font-bold tracking-widest text-[#D4AF37] uppercase drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]">
