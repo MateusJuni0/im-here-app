@@ -8,4 +8,23 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  build: {
+    target: 'ES2020',
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+      },
+    },
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'three-vendor': ['three', '@react-three/fiber', '@react-three/drei'],
+          'motion-vendor': ['framer-motion'],
+          'ui-vendor': ['lucide-react', 'zustand'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+  },
 })
