@@ -1,21 +1,23 @@
-export enum ServiceProvider {
-  UBER = 'UBER',
-  BOLT = 'BOLT',
-  IFOOD = 'IFOOD',
-  THEFORK = 'THEFORK',
-  CONCIERGE = 'CONCIERGE',
-  TAP = 'TAP',
-  EMIRATES = 'EMIRATES',
-  NETJETS = 'NETJETS'
-}
+export const ServiceProvider = {
+  UBER: 'UBER',
+  BOLT: 'BOLT',
+  IFOOD: 'IFOOD',
+  THEFORK: 'THEFORK',
+  CONCIERGE: 'CONCIERGE',
+  TAP: 'TAP',
+  EMIRATES: 'EMIRATES',
+  NETJETS: 'NETJETS'
+} as const;
+export type ServiceProvider = typeof ServiceProvider[keyof typeof ServiceProvider];
 
-export enum RequestStatus {
-  PENDING = 'PENDING',
-  ROUTING = 'ROUTING',
-  IN_PROGRESS = 'IN_PROGRESS',
-  COMPLETED = 'COMPLETED',
-  FAILED = 'FAILED'
-}
+export const RequestStatus = {
+  PENDING: 'PENDING',
+  ROUTING: 'ROUTING',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
+} as const;
+export type RequestStatus = typeof RequestStatus[keyof typeof RequestStatus];
 
 export interface RidePayload {
   origin: string;

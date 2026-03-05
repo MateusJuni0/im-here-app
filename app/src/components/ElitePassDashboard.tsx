@@ -1,4 +1,3 @@
-import React from 'react';
 import { useWalletStore } from '../store/useWalletStore';
 import { elitePassManager } from '../services/managers/ElitePassManager';
 import { motion } from 'framer-motion';

@@ -1,4 +1,4 @@
-
+import 'reflect-metadata';
 import { injectable } from 'inversify';
 
 // Interfaces para os dados que seriam obtidos via scraping

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const bufferSteps = [
@@ -24,7 +24,7 @@ export const WrapperStatus = () => {
 
   // Spring Physics configurations
   const springConfig = {
-    type: "spring",
+    type: "spring" as const,
     stiffness: 250,
     damping: 20,
     mass: 0.5

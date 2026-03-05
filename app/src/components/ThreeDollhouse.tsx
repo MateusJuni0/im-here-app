@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+/// <reference types="@react-three/fiber" />
+import { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows, Html } from '@react-three/drei';
 import * as THREE from 'three';
@@ -10,11 +11,11 @@ interface DollhouseModelProps {
   onClick: () => void;
 }
 
-const DollhouseModel: React.FC<DollhouseModelProps> = ({ position, onClick, isHovered, setIsHovered }) => {
+const DollhouseModel = ({ position, onClick, isHovered, setIsHovered }: DollhouseModelProps) => {
   const meshRef = useRef<THREE.Mesh>(null);
 
   // Animation loop
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     if (meshRef.current) {
       // Gentle idle rotation
       meshRef.current.rotation.y += delta * 0.1;
@@ -30,8 +31,8 @@ const DollhouseModel: React.FC<DollhouseModelProps> = ({ position, onClick, isHo
       <mesh 
         ref={meshRef}
         onClick={onClick}
-        onPointerOver={(e) => { e.stopPropagation(); setIsHovered(true); document.body.style.cursor = 'pointer'; }}
-        onPointerOut={(e) => { e.stopPropagation(); setIsHovered(false); document.body.style.cursor = 'auto'; }}
+        onPointerOver={(e: any) => { e.stopPropagation(); setIsHovered(true); document.body.style.cursor = 'pointer'; }}
+        onPointerOut={(e: any) => { e.stopPropagation(); setIsHovered(false); document.body.style.cursor = 'auto'; }}
         castShadow
         receiveShadow
       >

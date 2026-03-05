@@ -1,5 +1,6 @@
-import { IMobilityAdapter } from './mobility.adapter';
-import { UnifiedRequest, ServiceProvider } from '../../types/wrapper.types';
+import type { IMobilityAdapter } from './mobility.adapter';
+import type { UnifiedRequest } from '../../types/wrapper.types';
+import { ServiceProvider } from '../../types/wrapper.types';
 
 export class UberAdapter implements IMobilityAdapter {
   readonly provider = ServiceProvider.UBER;

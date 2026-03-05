@@ -21,7 +21,7 @@ interface MonitoredActivity {
 
 class SafetyGuardianManager {
   private monitoredActivities: MonitoredActivity[] = [];
-  private monitoringInterval: NodeJS.Timeout | null = null;
+  private monitoringInterval: any = null;
 
   constructor() {
     this.startMonitoring();

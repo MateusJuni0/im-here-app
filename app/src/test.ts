@@ -1,7 +1,8 @@
 import { ConciergeBufferManager } from './services/managers/ConciergeBufferManager';
 import { UberAdapter } from './services/adapters/uber.adapter';
 import { BoltAdapter } from './services/adapters/bolt.adapter';
-import { UnifiedRequest, RequestStatus } from './types/wrapper.types';
+import type { UnifiedRequest } from './types/wrapper.types';
+import { RequestStatus } from './types/wrapper.types';
 
 async function test() {
   const manager = new ConciergeBufferManager([

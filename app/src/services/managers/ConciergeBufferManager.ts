@@ -1,10 +1,12 @@
-import { 
+import type { 
   UnifiedRequest, 
-  ConciergeTask, 
+  ConciergeTask 
+} from '../../types/wrapper.types';
+import { 
   RequestStatus, 
   ServiceProvider 
 } from '../../types/wrapper.types';
-import { IMobilityAdapter } from '../adapters/mobility.adapter';
+import type { IMobilityAdapter } from '../adapters/mobility.adapter';
 
 export class ConciergeBufferManager {
   private adapters: Map<ServiceProvider, IMobilityAdapter>;

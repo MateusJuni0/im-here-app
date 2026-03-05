@@ -1,4 +1,5 @@
-import { UnifiedRequest, ServiceProvider } from '../../types/wrapper.types';
+import type { UnifiedRequest } from '../../types/wrapper.types';
+import { ServiceProvider } from '../../types/wrapper.types';
 
 export interface IMobilityAdapter {
   readonly provider: ServiceProvider;

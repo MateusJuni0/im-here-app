@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, useMotionValue } from 'framer-motion';
 
 // Mock data
@@ -26,7 +26,7 @@ const showcaseData = [
 const ItemCard = ({ item }: { item: any }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
-  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hoverTimeoutRef = useRef<any>(null);
   
   // AI Focal Point - Simulated
   const focalX = useMotionValue(50);
