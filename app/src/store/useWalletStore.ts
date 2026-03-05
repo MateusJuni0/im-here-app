@@ -1,8 +1,12 @@
 import { create } from 'zustand';
 import { TransactionPayload, HoldPayload } from '../services/managers/EliteWalletManager';
 
+export type EliteStatus = 'Silver' | 'Gold' | 'Diamond';
+
 interface WalletState {
   balanceEur: number;
+  elitePoints: number;
+  status: EliteStatus;
   transactions: TransactionPayload[];
   holds: HoldPayload[];
   
@@ -14,12 +18,22 @@ interface WalletState {
   addHold: (hold: HoldPayload) => void;
   removeHold: (holdId: string) => void;
   
+  addElitePoints: (points: number) => void;
+
   // Computado (Saldo Disponível = Saldo Total - Retenções)
   getAvailableBalance: () => number;
 }
 
+const calculateStatus = (points: number): EliteStatus => {
+  if (points >= 5000) return 'Diamond';
+  if (points >= 1000) return 'Gold';
+  return 'Silver';
+};
+
 export const useWalletStore = create<WalletState>((set, get) => ({
   balanceEur: 0,
+  elitePoints: 0,
+  status: 'Silver',
   transactions: [],
   holds: [],
 
@@ -44,6 +58,14 @@ export const useWalletStore = create<WalletState>((set, get) => ({
   removeHold: (holdId: string) => set((state) => ({
     holds: state.holds.filter(h => h.id !== holdId)
   })),
+
+  addElitePoints: (points: number) => set((state) => {
+    const newPoints = state.elitePoints + points;
+    return {
+      elitePoints: newPoints,
+      status: calculateStatus(newPoints)
+    };
+  }),
 
   getAvailableBalance: () => {
     const { balanceEur, holds } = get();
