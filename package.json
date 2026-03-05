@@ -4,5 +4,9 @@
   "workspaces": [
     "app",
     "packages/*"
-  ]
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=app",
+    "install-all": "npm install --legacy-peer-deps"
+  }
 }
