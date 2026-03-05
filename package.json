@@ -6,7 +6,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build --workspace=app",
+    "build": "cd app && npm install --legacy-peer-deps && npm run build",
     "install-all": "npm install --legacy-peer-deps"
   }
 }
