@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { TransactionPayload, HoldPayload } from '../services/managers/EliteWalletManager';
+import type { TransactionPayload, HoldPayload } from '../types/wallet.types';
 
 export type EliteStatus = 'Silver' | 'Gold' | 'Diamond';
 

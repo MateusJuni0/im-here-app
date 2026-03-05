@@ -4,7 +4,7 @@ import { ElitePassDashboard } from './components/ElitePassDashboard'
 import { EliteShowcase } from './components/EliteShowcase'
 import { ThreeDollhouse } from './components/ThreeDollhouse'
 import { WrapperStatus } from './components/WrapperStatus'
-import { User, Settings, Crown, Activity, Layout, Box, Navigation } from 'lucide-react'
+import { User, Settings, Crown, Activity, LayoutTemplate as Layout, Box, Compass as Navigation } from 'lucide-react'
 
 type Tab = 'mood' | 'elite' | 'showcase' | '3d' | 'wrapper'
 
