@@ -1,79 +1,29 @@
 import { useState } from 'react'
-import { MoodOnboarding } from './components/MoodOnboarding'
-import { ElitePassDashboard } from './components/ElitePassDashboard'
-import { EliteShowcase } from './components/EliteShowcase'
-import { ThreeDollhouse } from './components/ThreeDollhouse'
-import { WrapperStatus } from './components/WrapperStatus'
+// import { MoodOnboarding } from './components/MoodOnboarding'
+// import { ElitePassDashboard } from './components/ElitePassDashboard'
+// import { EliteShowcase } from './components/EliteShowcase'
+// import { ThreeDollhouse } from './components/ThreeDollhouse'
+// import { WrapperStatus } from './components/WrapperStatus'
 import { User, Settings, Crown, Activity, LayoutTemplate as Layout, Box, Compass as Navigation } from 'lucide-react'
 
-type Tab = 'mood' | 'elite' | 'showcase' | '3d' | 'wrapper'
-
 function App() {
-  const [activeTab, setActiveTab] = useState<Tab>('elite')
+  const [activeTab, setActiveTab] = useState('elite')
 
   return (
-    <div className="min-h-screen bg-[#0a0a15] text-white font-sans selection:bg-gold/30">
-      {/* Teste de Vida do React */}
+    <div className="min-h-screen bg-[#0a0a15] text-white font-sans flex items-center justify-center">
       <div className="fixed top-0 left-0 z-[9999] bg-red-600 text-white p-2 text-[12px] font-bold">
-        🏛️ DANTE CORE ACTIVE v1.0.3 - REACT TEST
+        🏛️ DANTE CORE - EMERGENCY DEBUG v1.0.4
       </div>
-
-      {/* Top Nav */}
-      <nav className="fixed top-0 left-0 w-full p-6 flex justify-between items-center z-50 pointer-events-none">
-        <div className="text-xl font-bold tracking-widest text-[#D4AF37] uppercase drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]">
-          Elite
+      
+      <div className="text-center">
+        <h1 className="text-5xl font-bold text-gold mb-4">REACT OK</h1>
+        <p className="text-gray-400">Se estás a ler isto, o React está vivo. A "Tela Preta" é causada por um componente específico.</p>
+        <div className="mt-8 flex gap-4 justify-center">
+           <Activity className="text-gold" />
+           <Crown className="text-gold" />
+           <Box className="text-gold" />
         </div>
-        <div className="flex gap-2 text-white pointer-events-auto bg-black/40 backdrop-blur-xl p-2 rounded-2xl border border-white/5">
-          <button 
-            onClick={() => setActiveTab('mood')}
-            className={`p-2 transition-all rounded-xl ${activeTab === 'mood' ? 'text-[#D4AF37] bg-white/5' : 'text-gray-400 hover:text-white'}`}
-            title="Mood Onboarding"
-          >
-            <Activity size={18} />
-          </button>
-          <button 
-            onClick={() => setActiveTab('wrapper')}
-            className={`p-2 transition-all rounded-xl ${activeTab === 'wrapper' ? 'text-[#D4AF37] bg-white/5' : 'text-gray-400 hover:text-white'}`}
-            title="Wrapper Status"
-          >
-            <Navigation size={18} />
-          </button>
-          <button 
-            onClick={() => setActiveTab('showcase')}
-            className={`p-2 transition-all rounded-xl ${activeTab === 'showcase' ? 'text-[#D4AF37] bg-white/5' : 'text-gray-400 hover:text-white'}`}
-            title="Netflix UI Showcase"
-          >
-            <Layout size={18} />
-          </button>
-          <button 
-            onClick={() => setActiveTab('3d')}
-            className={`p-2 transition-all rounded-xl ${activeTab === '3d' ? 'text-[#D4AF37] bg-white/5' : 'text-gray-400 hover:text-white'}`}
-            title="3D Dollhouse"
-          >
-            <Box size={18} />
-          </button>
-          <button 
-            onClick={() => setActiveTab('elite')}
-            className={`p-2 transition-all rounded-xl ${activeTab === 'elite' ? 'text-[#D4AF37] bg-white/5' : 'text-gray-400 hover:text-white'}`}
-            title="Elite Pass"
-          >
-            <Crown size={18} />
-          </button>
-        </div>
-        <div className="flex gap-4 pointer-events-auto">
-          <button className="p-2 text-gray-400 hover:text-[#D4AF37] transition-colors"><Settings size={18} /></button>
-          <button className="p-2 text-gray-400 hover:text-[#D4AF37] transition-colors"><User size={18} /></button>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <main className="min-h-screen relative">
-        {activeTab === 'mood' && <div className="pt-24"><MoodOnboarding /></div>}
-        {activeTab === 'wrapper' && <div className="pt-24 px-6 flex justify-center"><WrapperStatus /></div>}
-        {activeTab === 'showcase' && <EliteShowcase />}
-        {activeTab === '3d' && <ThreeDollhouse />}
-        {activeTab === 'elite' && <div className="pt-24"><ElitePassDashboard /></div>}
-      </main>
+      </div>
     </div>
   )
 }
