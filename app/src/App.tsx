@@ -54,14 +54,14 @@ function App() {
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 w-full p-6 flex justify-between items-center z-50 pointer-events-none"
+        className="fixed top-0 left-0 w-full p-4 md:p-6 flex justify-between items-center z-50 pointer-events-none"
       >
-        <div className="text-xl font-bold tracking-widest text-white uppercase flex items-center gap-3">
-          <div className="w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse shadow-[0_0_10px_#D4AF37]"></div>
-          <span className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">Elite</span>
+        <div className="text-lg md:text-xl font-bold tracking-widest text-white uppercase flex items-center gap-2 md:gap-3 pointer-events-auto">
+          <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#D4AF37] animate-pulse shadow-[0_0_10px_#D4AF37]"></div>
+          <span className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent hidden xs:block">Elite</span>
         </div>
 
-        <div className="flex gap-2 text-white pointer-events-auto bg-[#030303]/40 backdrop-blur-2xl p-2 rounded-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+        <div className="flex gap-1 md:gap-2 text-white pointer-events-auto bg-[#030303]/40 backdrop-blur-2xl p-1.5 md:p-2 rounded-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
           {[
             { id: 'mood', icon: Activity, label: 'Mood' },
             { id: 'wrapper', icon: Navigation, label: 'Wrapper' },
@@ -74,7 +74,7 @@ function App() {
               whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.1)' }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setActiveTab(id as Tab)}
-              className={`relative p-3 rounded-xl transition-colors duration-300 ${activeTab === id ? 'text-[#D4AF37]' : 'text-gray-400'}`}
+              className={`relative p-2 md:p-3 rounded-xl transition-colors duration-300 ${activeTab === id ? 'text-[#D4AF37]' : 'text-gray-400'}`}
               title={label}
             >
               {activeTab === id && (
@@ -84,14 +84,14 @@ function App() {
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
-              <Icon size={20} className="relative z-10" />
+              <Icon size={18} className="relative z-10 md:w-[20px] md:h-[20px]" />
             </motion.button>
           ))}
         </div>
 
-        <div className="flex gap-4 pointer-events-auto">
-          <motion.button whileHover={{ rotate: 90 }} className="p-3 bg-white/5 border border-white/10 rounded-xl text-gray-400 hover:text-white transition-colors backdrop-blur-md"><Settings size={20} /></motion.button>
-          <motion.button whileHover={{ scale: 1.05 }} className="p-3 bg-white/5 border border-white/10 rounded-xl text-gray-400 hover:text-white transition-colors backdrop-blur-md"><User size={20} /></motion.button>
+        <div className="flex gap-2 md:gap-4 pointer-events-auto">
+          <motion.button whileHover={{ rotate: 90 }} className="p-2 md:p-3 bg-white/5 border border-white/10 rounded-xl text-gray-400 hover:text-white transition-colors backdrop-blur-md"><Settings size={18} className="md:w-[20px] md:h-[20px]" /></motion.button>
+          <motion.button whileHover={{ scale: 1.05 }} className="p-2 md:p-3 bg-white/5 border border-white/10 rounded-xl text-gray-400 hover:text-white transition-colors backdrop-blur-md"><User size={18} className="md:w-[20px] md:h-[20px]" /></motion.button>
         </div>
       </motion.nav>
 
