@@ -56,7 +56,7 @@ export const ElitePassDashboard = () => {
             className="font-serif text-4xl md:text-6xl text-white"
           >
             Elite Pass <span className="text-[#D4AF37] italic">Dashboard</span>
-          </h3 >
+          </motion.h3>
         </div>
         <motion.div
           initial={{ opacity: 0 }}
