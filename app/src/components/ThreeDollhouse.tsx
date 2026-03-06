@@ -1,193 +1,162 @@
 /// <reference types="@react-three/fiber" />
 import { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Environment, ContactShadows, Html } from '@react-three/drei';
+import { OrbitControls, Environment, ContactShadows, Float, Stars, MeshDistortMaterial, MeshWobbleMaterial } from '@react-three/drei';
 import * as THREE from 'three';
+import { motion } from 'framer-motion';
 
 interface DollhouseModelProps {
-  position: [number, number, number];
   isHovered: boolean;
   setIsHovered: (state: boolean) => void;
-  onClick: () => void;
 }
 
-const DollhouseModel = ({ position, onClick, isHovered, setIsHovered }: DollhouseModelProps) => {
+const EliteStructure = ({ isHovered, setIsHovered }: DollhouseModelProps) => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const groupRef = useRef<THREE.Group>(null);
+  const coreRef = useRef<THREE.Mesh>(null);
 
-  // Animation loop
-  useFrame((_state, delta) => {
-    if (groupRef.current) {
-      // Gentle idle rotation
-      groupRef.current.rotation.y += delta * 0.15;
-      
-      // Scale on hover (interactive feedback)
-      const targetScale = isHovered ? 1.05 : 1;
-      groupRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime();
+    if (meshRef.current) {
+      meshRef.current.rotation.y = t * 0.2;
+      meshRef.current.rotation.x = t * 0.1;
     }
   });
 
   return (
-    <group ref={groupRef} position={position} onClick={onClick}>
-      {/* Base Structure (Wireframe) */}
-      <mesh 
-        onPointerOver={(e: any) => { e.stopPropagation(); setIsHovered(true); document.body.style.cursor = 'pointer'; }}
-        onPointerOut={(e: any) => { e.stopPropagation(); setIsHovered(false); document.body.style.cursor = 'auto'; }}
-      >
-        <boxGeometry args={[3, 4, 3]} />
-        <meshStandardMaterial 
-          color="#D4AF37" 
-          wireframe 
-          transparent 
-          opacity={0.3} 
-        />
-      </mesh>
-
-      {/* Internal Core (Solid) */}
-      <mesh ref={meshRef} castShadow receiveShadow>
-        <boxGeometry args={[2.5, 3.5, 2.5]} />
-        <meshStandardMaterial 
-          color={isHovered ? "#D4AF37" : "#111"} 
-          metalness={0.9}
-          roughness={0.1}
-          emissive={isHovered ? "#D4AF37" : "#000"}
-          emissiveIntensity={isHovered ? 0.5 : 0}
-        />
-      </mesh>
-
-      {/* Detail Cubes (Windows/Architecture) */}
-      {[
-        [-1.3, 1, 0], [1.3, 1, 0], [0, 1, 1.3], [0, 1, -1.3],
-        [-1.3, -1, 0], [1.3, -1, 0], [0, -1, 1.3], [0, -1, -1.3]
-      ].map((pos, i) => (
-        <mesh key={i} position={pos as [number, number, number]}>
-          <boxGeometry args={[0.2, 0.8, 0.2]} />
-          <meshStandardMaterial color="#D4AF37" emissive="#D4AF37" emissiveIntensity={1} />
+    <group>
+      <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
+        {/* Outer Sovereign Shell */}
+        <mesh 
+          ref={meshRef}
+          onPointerOver={() => { setIsHovered(true); document.body.style.cursor = 'pointer'; }}
+          onPointerOut={() => { setIsHovered(false); document.body.style.cursor = 'auto'; }}
+        >
+          <torusKnotGeometry args={[1.5, 0.4, 256, 32]} />
+          <MeshDistortMaterial 
+            color={isHovered ? "#D4AF37" : "#333"} 
+            speed={2} 
+            distort={0.4} 
+            radius={1}
+            metalness={1}
+            roughness={0.1}
+          />
         </mesh>
-      ))}
-      
-      {/* Floating UI Tooltip over 3D model */}
-      {isHovered && (
-        <Html position={[0, 3, 0]} center className="pointer-events-none">
-          <motion.div 
-            initial={{ opacity: 0, y: 10, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            className="bg-black/80 backdrop-blur-2xl text-white p-5 rounded-3xl border border-[#D4AF37]/50 w-64 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-2 h-2 rounded-full bg-[#D4AF37] shadow-[0_0_8px_#D4AF37]"></div>
-              <p className="text-[10px] font-black uppercase tracking-widest text-[#D4AF37]">Property Active</p>
-            </div>
-            <h3 className="font-serif text-xl font-bold text-white mb-1">Villa Estoril Elite</h3>
-            <p className="text-[11px] text-gray-400 leading-relaxed">Arquitetura soberana com integração total ao ecossistema. 1.200m² de luxo absoluto.</p>
-            <div className="mt-4 flex justify-between items-center pt-4 border-t border-white/10">
-              <span className="text-xs font-bold text-[#D4AF37]">€4.500.000</span>
-              <span className="text-[10px] uppercase font-black text-white/40">Ver Detalhes</span>
-            </div>
-          </motion.div>
-        </Html>
-      )}
+
+        {/* Inner Core */}
+        <mesh ref={coreRef}>
+          <sphereGeometry args={[0.8, 64, 64]} />
+          <MeshWobbleMaterial 
+            color="#D4AF37" 
+            factor={0.4} 
+            speed={2} 
+            metalness={1} 
+            roughness={0} 
+            emissive="#D4AF37"
+            emissiveIntensity={isHovered ? 2 : 0.5}
+          />
+        </mesh>
+      </Float>
     </group>
   );
 };
 
 export const ThreeDollhouse = () => {
-  const [hoveredPoint, setHoveredPoint] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="w-full h-screen bg-[#030303] relative overflow-hidden">
-      {/* HUD Layer */}
-      <div className="absolute top-32 left-8 md:left-12 z-10 text-white pointer-events-none select-none">
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="flex items-center gap-4 mb-4"
-        >
-          <div className="w-12 h-px bg-[#D4AF37]"></div>
-          <h2 className="text-[#D4AF37] tracking-widest uppercase text-xs font-semibold">Immersive Architecture</h2>
-        </motion.div>
-        
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="font-serif text-5xl md:text-7xl lg:text-8xl font-black text-white leading-none tracking-tighter"
-        >
-          3D <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-white italic">Dollhouse</span>
-        </motion.h1>
-        
-        <motion.p 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="text-gray-500 mt-6 max-w-md text-sm md:text-base leading-relaxed"
-        >
-          Navegue pelas propriedades exclusivas do Portugal Elite Ecosystem através de maquetes interativas de alta precisão.
-        </motion.p>
+    <div className="w-full h-screen bg-[#030303] relative overflow-hidden flex items-center justify-center">
+      {/* Background Glow */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#D4AF37] opacity-5 blur-[150px] rounded-full"></div>
+      </div>
 
-        {/* HUD Data Points */}
-        <div className="mt-12 space-y-4">
-          {[
-            { label: 'Active Renders', val: '039_V2.0' },
-            { label: 'Core Integrity', val: '98.4%' },
-            { label: 'Latency', val: '0.04ms' }
-          ].map((stat, i) => (
-            <motion.div 
-              key={i} 
-              initial={{ opacity: 0, x: -10 }} 
-              animate={{ opacity: 1, x: 0 }} 
-              transition={{ delay: 0.5 + i * 0.1 }}
-              className="flex items-center gap-6"
-            >
-              <p className="text-[10px] text-gray-600 uppercase tracking-[0.4em] font-black w-32">{stat.label}</p>
-              <p className="text-xs text-[#D4AF37] font-mono font-bold tracking-widest">{stat.val}</p>
-            </motion.div>
-          ))}
+      {/* HUD Layer - Ultra Elite */}
+      <div className="absolute inset-0 z-10 pointer-events-none p-12 flex flex-col justify-between">
+        <div className="flex justify-between items-start">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="max-w-md"
+          >
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-px bg-[#D4AF37]"></div>
+              <p className="text-[10px] text-[#D4AF37] font-black uppercase tracking-[0.5em]">System Core V2.5</p>
+            </div>
+            <h1 className="font-serif text-6xl md:text-8xl text-white font-black tracking-tighter mb-4">
+              3D <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-white italic">Elite</span>
+            </h1>
+            <p className="text-gray-500 text-sm leading-relaxed max-w-xs font-medium uppercase tracking-widest opacity-60">
+              Arquitetura Imersiva & Gestão de Ativos em Tempo Real.
+            </p>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="p-8 bg-white/[0.02] border border-white/10 rounded-[40px] backdrop-blur-3xl text-right"
+          >
+            <p className="text-[10px] text-gray-600 font-black uppercase tracking-widest mb-2">Network Status</p>
+            <div className="flex items-center justify-end gap-3">
+              <span className="text-white font-mono text-xl font-bold italic tracking-tighter">OPERATIONAL</span>
+              <div className="w-2 h-2 rounded-full bg-[#D4AF37] animate-ping"></div>
+            </div>
+          </motion.div>
+        </div>
+
+        <div className="flex justify-between items-end">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex gap-12"
+          >
+            {[
+              { label: 'Symmetry', val: '99.9%' },
+              { label: 'Complexity', val: 'High' },
+              { label: 'Render', val: 'Elite' }
+            ].map((s, i) => (
+              <div key={i}>
+                <p className="text-[9px] text-gray-600 font-black uppercase tracking-widest mb-1">{s.label}</p>
+                <p className="text-white font-bold text-sm tracking-widest">{s.val}</p>
+              </div>
+            ))}
+          </motion.div>
+          
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="max-w-xs text-right"
+          >
+            <p className="text-[10px] text-gray-500 font-medium uppercase tracking-[0.2em] leading-relaxed">
+              Use gestos de toque para orbitar e explorar a geometria soberana.
+            </p>
+          </motion.div>
         </div>
       </div>
 
-      {/* Control Hint */}
-      <div className="absolute bottom-12 right-12 z-10 p-4 border border-white/5 bg-white/[0.02] backdrop-blur-3xl rounded-3xl flex items-center gap-4 pointer-events-none opacity-40">
-        <div className="w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div>
-        </div>
-        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Orbital Control Active</p>
+      {/* 3D Canvas */}
+      <div className="absolute inset-0 z-0">
+        <Canvas camera={{ position: [0, 0, 8], fov: 45 }} shadows dpr={[1, 2]}>
+          <color attach="background" args={['#030303']} />
+          <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 10, 10]} intensity={2} color="#D4AF37" />
+          <spotLight position={[-10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
+          
+          <EliteStructure isHovered={isHovered} setIsHovered={setIsHovered} />
+          
+          <ContactShadows position={[0, -4, 0]} opacity={0.4} scale={20} blur={2.5} far={4.5} color="#D4AF37" />
+          
+          <Environment preset="night" />
+          
+          <OrbitControls 
+            enablePan={false} 
+            enableZoom={false} 
+            minPolarAngle={Math.PI / 4} 
+            maxPolarAngle={Math.PI / 1.5}
+            makeDefault
+          />
+        </Canvas>
       </div>
-
-      {/* 3D Canvas Context */}
-      <Canvas camera={{ position: [8, 6, 8], fov: 40 }} shadows>
-        <ambientLight intensity={0.4} />
-        <spotLight position={[10, 15, 10]} angle={0.15} penumbra={1} intensity={2} castShadow />
-        <pointLight position={[-10, -10, -10]} intensity={1} color="#333" />
-        
-        <Environment preset="night" />
-        
-        {/* Interactive 3D Mock Model */}
-        <DollhouseModel 
-          position={[0, 0, 0]} 
-          isHovered={hoveredPoint}
-          setIsHovered={setHoveredPoint}
-          onClick={() => console.log("Entering deep Dollhouse view for property...")}
-        />
-
-        {/* Studio base plane - Refined */}
-        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]} receiveShadow>
-          <planeGeometry args={[100, 100]} />
-          <meshStandardMaterial color="#010101" roughness={0.1} metalness={1} />
-        </mesh>
-
-        <ContactShadows position={[0, -1.99, 0]} opacity={0.8} scale={20} blur={2.5} far={4} color="#000000" />
-        
-        <OrbitControls 
-          enablePan={false}
-          minPolarAngle={Math.PI / 6}
-          maxPolarAngle={Math.PI / 2.1}
-          minDistance={6}
-          maxDistance={20}
-          dampingFactor={0.05}
-          autoRotate={!hoveredPoint}
-          autoRotateSpeed={0.3}
-        />
-      </Canvas>
     </div>
   );
 };

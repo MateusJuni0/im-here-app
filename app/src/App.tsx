@@ -54,14 +54,14 @@ function App() {
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 w-full p-4 md:p-6 flex justify-between items-center z-50 pointer-events-none"
+        className="fixed top-12 md:top-8 left-0 w-full px-6 flex justify-between items-center z-50 pointer-events-none"
       >
-        <div className="text-lg md:text-xl font-bold tracking-widest text-white uppercase flex items-center gap-2 md:gap-3 pointer-events-auto">
-          <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#D4AF37] animate-pulse shadow-[0_0_10px_#D4AF37]"></div>
-          <span className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent hidden xs:block">Elite</span>
+        <div className="text-xl font-bold tracking-[0.3em] text-white uppercase flex items-center gap-4 pointer-events-auto">
+          <div className="w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse shadow-[0_0_15px_#D4AF37]"></div>
+          <span className="bg-gradient-to-r from-white via-white to-gray-500 bg-clip-text text-transparent drop-shadow-lg hidden sm:block">Sovereign Elite</span>
         </div>
 
-        <div className="flex gap-1 md:gap-2 text-white pointer-events-auto bg-[#030303]/40 backdrop-blur-2xl p-1.5 md:p-2 rounded-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+        <div className="flex gap-2 md:gap-4 text-white pointer-events-auto bg-[#0a0a0a]/60 backdrop-blur-3xl p-3 rounded-[24px] border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
           {[
             { id: 'mood', icon: Activity, label: 'Mood' },
             { id: 'wrapper', icon: Navigation, label: 'Wrapper' },
@@ -71,27 +71,27 @@ function App() {
           ].map(({ id, icon: Icon, label }) => (
             <motion.button 
               key={id}
-              whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.1)' }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.1, backgroundColor: 'rgba(212,175,55,0.1)' }}
+              whileTap={{ scale: 0.9 }}
               onClick={() => setActiveTab(id as Tab)}
-              className={`relative p-2 md:p-3 rounded-xl transition-colors duration-300 ${activeTab === id ? 'text-[#D4AF37]' : 'text-gray-400'}`}
+              className={`relative p-3.5 rounded-2xl transition-all duration-500 ${activeTab === id ? 'text-[#D4AF37] bg-white/5' : 'text-gray-500 hover:text-white'}`}
               title={label}
             >
               {activeTab === id && (
                 <motion.div 
                   layoutId="active-tab" 
-                  className="absolute inset-0 bg-white/5 rounded-xl border border-white/10" 
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  className="absolute inset-0 bg-[#D4AF37]/10 rounded-2xl border border-[#D4AF37]/20" 
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />
               )}
-              <Icon size={18} className="relative z-10 md:w-[20px] md:h-[20px]" />
+              <Icon size={20} className="relative z-10" />
             </motion.button>
           ))}
         </div>
 
-        <div className="flex gap-2 md:gap-4 pointer-events-auto">
-          <motion.button whileHover={{ rotate: 90 }} className="p-2 md:p-3 bg-white/5 border border-white/10 rounded-xl text-gray-400 hover:text-white transition-colors backdrop-blur-md"><Settings size={18} className="md:w-[20px] md:h-[20px]" /></motion.button>
-          <motion.button whileHover={{ scale: 1.05 }} className="p-2 md:p-3 bg-white/5 border border-white/10 rounded-xl text-gray-400 hover:text-white transition-colors backdrop-blur-md"><User size={18} className="md:w-[20px] md:h-[20px]" /></motion.button>
+        <div className="flex gap-3 pointer-events-auto">
+          <motion.button whileHover={{ rotate: 180, scale: 1.1 }} className="p-4 bg-white/[0.03] border border-white/10 rounded-2xl text-gray-500 hover:text-white transition-all backdrop-blur-xl shadow-2xl"><Settings size={20} /></motion.button>
+          <motion.button whileHover={{ y: -5, scale: 1.1 }} className="p-4 bg-white/[0.03] border border-white/10 rounded-2xl text-gray-500 hover:text-white transition-all backdrop-blur-xl shadow-2xl"><User size={20} /></motion.button>
         </div>
       </motion.nav>
 
