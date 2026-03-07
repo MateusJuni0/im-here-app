@@ -5,6 +5,7 @@ import { ElitePassDashboard } from './components/ElitePassDashboard'
 import { EliteShowcase } from './components/EliteShowcase'
 import { ThreeDollhouse } from './components/ThreeDollhouse'
 import { WrapperStatus } from './components/WrapperStatus'
+import { LandingLogin } from './components/LandingLogin'
 import { User, Settings, Crown, Activity, LayoutTemplate as Layout, Box, Compass as Navigation } from 'lucide-react'
 
 // Error Boundary Minimalista para proteger o App de falhas no 3D
@@ -18,7 +19,7 @@ class ErrorBoundary extends Component<{children: ReactNode}, {hasError: boolean}
     if (this.state.hasError) {
       return (
         <div className="flex items-center justify-center min-h-screen bg-[#030303]">
-          <div className="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl text-center shadow-2xl">
+          <div className="p-8 rounded-[32px] border border-white/10 bg-white/5 backdrop-blur-xl text-center shadow-2xl">
             <h2 className="text-xl font-bold text-white mb-2">Falha na Renderização 3D</h2>
             <p className="text-gray-400">Este componente encontra-se temporariamente indisponível.</p>
           </div>
@@ -32,6 +33,7 @@ class ErrorBoundary extends Component<{children: ReactNode}, {hasError: boolean}
 type Tab = 'mood' | 'elite' | 'showcase' | '3d' | 'wrapper'
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [activeTab, setActiveTab] = useState<Tab>('elite')
 
   const tabVariants = {
@@ -39,6 +41,22 @@ function App() {
     animate: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
     exit: { opacity: 0, y: -20, filter: 'blur(10px)', transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } }
   };
+
+  if (!isAuthenticated) {
+    return (
+      <AnimatePresence mode="wait">
+        <motion.div
+          key="login"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <LandingLogin onLogin={() => setIsAuthenticated(true)} />
+        </motion.div>
+      </AnimatePresence>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-[#030303] text-white font-sans selection:bg-[#D4AF37]/30 overflow-hidden">
@@ -91,7 +109,7 @@ function App() {
 
         <div className="flex gap-4 pointer-events-auto">
           <motion.button whileHover={{ rotate: 90 }} className="p-3 bg-white/5 border border-white/10 rounded-xl text-gray-400 hover:text-white transition-colors backdrop-blur-md"><Settings size={20} /></motion.button>
-          <motion.button whileHover={{ scale: 1.05 }} className="p-3 bg-white/5 border border-white/10 rounded-xl text-gray-400 hover:text-white transition-colors backdrop-blur-md"><User size={20} /></motion.button>
+          <motion.button whileHover={{ scale: 1.05 }} className="p-3 bg-white/5 border border-white/10 rounded-xl text-gray-400 hover:text-white transition-colors backdrop-blur-md" onClick={() => setIsAuthenticated(false)}><User size={20} /></motion.button>
         </div>
       </motion.nav>
 
