@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { globalBroker } from '../features/wrapper/ServiceBroker';
 
 const bufferSteps = [
   { id: 'search', label: 'Busca' },
@@ -14,6 +15,9 @@ export const WrapperStatus = () => {
 
   // Simulação do fluxo para demonstração do real-time
   useEffect(() => {
+    if (currentStep === 0) {
+      globalBroker.routeRequest({ serviceId: 'concierge_buffer', payload: { step: currentStep } });
+    }
     if (currentStep < bufferSteps.length - 1) {
       const timer = setTimeout(() => {
         setCurrentStep(prev => prev + 1);

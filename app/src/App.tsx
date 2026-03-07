@@ -5,6 +5,7 @@ import { ElitePassDashboard } from './components/ElitePassDashboard'
 import { EliteShowcase } from './components/EliteShowcase'
 import { ThreeDollhouse } from './components/ThreeDollhouse'
 import { WrapperStatus } from './components/WrapperStatus'
+import { ConciergeLogic } from './features/concierge/ConciergeLogic'
 import { User, Settings, Crown, Activity, LayoutTemplate as Layout, Box, Compass as Navigation } from 'lucide-react'
 
 // Error Boundary Minimalista para proteger o App de falhas no 3D
@@ -105,7 +106,8 @@ function App() {
               </motion.div>
             )}
             {activeTab === 'wrapper' && (
-              <motion.div key="wrapper" variants={tabVariants} initial="initial" animate="animate" exit="exit" className="pt-32 px-6 flex justify-center">
+              <motion.div key="wrapper" variants={tabVariants} initial="initial" animate="animate" exit="exit" className="pt-32 px-6 flex flex-col md:flex-row gap-8 justify-center items-start">
+                <ConciergeLogic />
                 <WrapperStatus />
               </motion.div>
             )}
