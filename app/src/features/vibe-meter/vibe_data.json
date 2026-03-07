@@ -1,0 +1,30 @@
+
+{
+  "venues": [
+    {
+      "name": "LuxFrágil",
+      "vibe": "Iconic Lisbon nightclub, famous for its sunrise views from the balcony. A must-visit.",
+      "genre": "Electronic"
+    },
+    {
+      "name": "Ministerium Club",
+      "vibe": "Electronic music powerhouse set in an 18th-century government building. Where history meets house.",
+      "genre": "House, Techno"
+    },
+    {
+      "name": "Harbour",
+      "vibe": "The essential after-hours spot on the riverfront. The party starts at dawn.",
+      "genre": "Electronic"
+    },
+    {
+      "name": "Komplex",
+      "vibe": "A multi-story creative hub and nightclub on the city's outskirts, featuring international electronic acts.",
+      "genre": "Electronic"
+    },
+    {
+      "name": "Kremlin",
+      "vibe": "A legendary, revamped electronic music club with a notorious past and a fresh look.",
+      "genre": "Electronic"
+    }
+  ]
+}
