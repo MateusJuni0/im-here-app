@@ -1,6 +1,6 @@
 import { useState, Component, ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MoodOnboarding } from './components/MoodOnboarding'
+import { MoodOnboarding } from './features/mood-onboarding/MoodOnboarding'
 import { ElitePassDashboard } from './components/ElitePassDashboard'
 import { EliteShowcase } from './components/EliteShowcase'
 import { ThreeDollhouse } from './components/ThreeDollhouse'
