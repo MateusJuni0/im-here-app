@@ -123,7 +123,7 @@ function App() {
             )}
             {activeTab === 'wrapper' && (
               <motion.div key="wrapper" variants={tabVariants} initial="initial" animate="animate" exit="exit" className="pt-36 md:pt-20 px-4 md:px-8 flex justify-center items-center min-h-[90vh]">
-                <WrapperStatus />
+                <WrapperDashboard />
               </motion.div>
             )}
             {activeTab === 'showcase' && (
