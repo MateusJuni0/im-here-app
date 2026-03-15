@@ -4,7 +4,7 @@ import { MoodOnboarding } from './features/mood-onboarding/MoodOnboarding'
 import { ElitePassDashboard } from './components/ElitePassDashboard'
 import { EliteShowcase } from './components/EliteShowcase'
 import { ThreeDollhouse } from './components/ThreeDollhouse'
-import { WrapperDashboard } from './components/WrapperDashboard'
+import WrapperDashboard from './components/WrapperDashboard'
 import { User, Settings, Crown, Activity, LayoutTemplate as Layout, Box, Compass as Navigation } from 'lucide-react'
 
 // Error Boundary Minimalista para proteger o App de falhas no 3D
