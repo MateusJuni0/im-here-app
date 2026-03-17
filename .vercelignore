@@ -1,8 +1,0 @@
-node_modules
-dist
-.git
-.vercel
-*.log
-*.tmp
-*.bak
-*.cache

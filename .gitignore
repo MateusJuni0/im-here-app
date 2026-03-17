@@ -1,6 +1,11 @@
-node_modules/
-dist/
-.env
-*.log
-.DS_Store
+node_modules
+.next
+dist
 .vercel
+*.log
+.env
+.env.*
+.DS_Store
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
