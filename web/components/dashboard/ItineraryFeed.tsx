@@ -38,9 +38,9 @@ export const ItineraryFeed = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-black tracking-tighter uppercase gold-gradient-text">Copyable Itineraries</h2>
-        <button className="text-sm text-white/40 hover:text-white flex items-center gap-1 transition-colors uppercase font-bold tracking-widest">
-          Browse All <ChevronRight size={16} />
+        <h2 className="text-2xl font-black gold-gradient-text uppercase tracking-[0.2em]">Copyable Itineraries</h2>
+        <button className="text-[10px] font-black uppercase tracking-widest text-gold/60 hover:text-gold flex items-center gap-1 transition-all group">
+          BROWSE ALL <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
         </button>
       </div>
 

@@ -31,7 +31,7 @@ const MapPrototype = () => {
       {/* "Rooms" represented by blocks */}
       <Box position={[-2, 0, -2]} color="#00D4FF" />
       <Box position={[2, 0, -2]} color="#FFD700" />
-      <Box position={[0, 0, 2]} color="#FF007F" />
+      <Box position={[0, 0, 2]} color="#FFFFFF" />
       
       <ContactShadows position={[0, -0.49, 0]} opacity={0.4} scale={20} blur={2} far={4.5} />
       <Environment preset="city" />
@@ -49,7 +49,7 @@ export const DollhouseMap = () => {
       
       <Canvas shadows>
         <PerspectiveCamera makeDefault position={[5, 5, 5]} fov={50} />
-        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
+        <OrbitControls enableZoom={true} autoRotate autoRotateSpeed={0.5} />
         <Suspense fallback={null}>
           <MapPrototype />
         </Suspense>

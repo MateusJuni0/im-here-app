@@ -47,7 +47,39 @@ import { ItineraryFeed } from "@/components/dashboard/ItineraryFeed";
 
 // --- Data Types & Mocks ---
 
-const SERVICES = {
+interface ServiceItem {
+  id: string;
+  name: string;
+  provider?: 'UBER' | 'BOLT' | 'FREE_NOW';
+  price?: string;
+  eta?: string;
+  rating: number;
+  image: ElementType;
+  cuisine?: string;
+  time?: string;
+  perks?: string;
+  detail?: string;
+  status?: string;
+}
+
+interface PropertyItem {
+  id: string;
+  title: string;
+  price: string;
+  type: string;
+  features: string[];
+  status: string;
+  image: ElementType;
+}
+
+interface TreasuryData {
+  optimization_score: number;
+  tax_saved_this_year: string;
+  next_deadline: string;
+  recommendations: string[];
+}
+
+const SERVICES: Record<string, ServiceItem[]> = {
   transport: [
     { id: "t1", name: "Uber Black", provider: "UBER" as const, price: "€25.00", eta: "4 min", rating: 4.9, image: Car },
     { id: "t2", name: "Bolt Premium", provider: "BOLT" as const, price: "€22.50", eta: "6 min", rating: 4.8, image: Car },
@@ -85,7 +117,15 @@ const SERVICES = {
 
 // --- Components ---
 
-const Swimlane = ({ title, items, onAction, actionIcon: ActionIcon, categoryIcon: CategoryIcon }: any) => {
+interface SwimlaneProps {
+  title: string;
+  items: any[]; // We'll keep this as any for now, as it can be ServiceItem or PropertyItem
+  onAction: (item: any) => void;
+  actionIcon: ElementType;
+  categoryIcon: ElementType;
+}
+
+const Swimlane = ({ title, items, onAction, actionIcon: ActionIcon, categoryIcon: CategoryIcon }: SwimlaneProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -177,9 +217,9 @@ const Swimlane = ({ title, items, onAction, actionIcon: ActionIcon, categoryIcon
 export default function Dashboard() {
   const { requestTransport, currentStatus } = useConcierge();
   const [wallet, setWallet] = useState<number | null>(null);
-  const [availability, setAvailability] = useState<any>(null);
-  const [properties, setProperties] = useState<any[]>([]);
-  const [treasury, setTreasury] = useState<any>(null);
+  const [availability, setAvailability] = useState<any>(null); // Kept as any as wrapper API is not typed yet
+  const [properties, setProperties] = useState<PropertyItem[]>([]);
+  const [treasury, setTreasury] = useState<TreasuryData | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("all");
 
@@ -212,8 +252,10 @@ export default function Dashboard() {
     fetchData();
   }, []);
 
-  const handleTransportRequest = (item: any) => {
-    requestTransport("Aeroporto Lisboa (LIS)", item.provider);
+  const handleTransportRequest = (item: ServiceItem) => {
+    if (item.provider) {
+      requestTransport("Aeroporto Lisboa (LIS)", item.provider);
+    }
   };
 
   if (loading) {

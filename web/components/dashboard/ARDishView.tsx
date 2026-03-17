@@ -68,7 +68,7 @@ export const ARDishView = () => {
           </div>
           
           <div className="space-y-2">
-             <button className="w-full py-3 bg-blue-500 hover:bg-blue-600 text-black font-black rounded-xl text-xs uppercase transition-all">
+             <button className="w-full py-3 bg-white hover:bg-gold text-black font-black rounded-xl text-xs uppercase transition-all hover:scale-105 active:scale-95">
                 Project on Table
              </button>
              <button className="w-full py-3 bg-white/5 hover:bg-white/10 text-white font-bold rounded-xl text-xs uppercase transition-all flex items-center justify-center gap-2">
