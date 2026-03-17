@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { ElementType, useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useConcierge } from "@/components/ConciergeContext";
 import { GlassCard } from "@/components/GlassCard";
@@ -11,7 +11,6 @@ import {
   Wallet, 
   ChevronRight, 
   Star, 
-  Clock, 
   Zap,
   MapPin,
   Shield,
@@ -22,7 +21,24 @@ import {
   Dog,
   Heart,
   TrendingUp,
-  LayoutGrid
+  LayoutGrid,
+  Rocket,
+  User,
+  Wine,
+  CookingPot,
+  Building2,
+  Landmark,
+  Building,
+  Baby,
+  HeartPulse,
+  GraduationCap,
+  Plane,
+  Ship,
+  Wind,
+  PlaneTakeoff,
+  Scale,
+  Tractor,
+  Palmtree
 } from "lucide-react";
 import { ElitePass } from "@/components/dashboard/ElitePass";
 import { DollhouseMap } from "@/components/dashboard/DollhouseMap";
@@ -33,37 +49,37 @@ import { ItineraryFeed } from "@/components/dashboard/ItineraryFeed";
 
 const SERVICES = {
   transport: [
-    { id: "t1", name: "Uber Black", provider: "UBER" as const, price: "€25.00", eta: "4 min", rating: 4.9, image: "🚗" },
-    { id: "t2", name: "Bolt Premium", provider: "BOLT" as const, price: "€22.50", eta: "6 min", rating: 4.8, image: "🚙" },
-    { id: "t3", name: "Executive Limo", provider: "FREE_NOW" as const, price: "€85.00", eta: "15 min", rating: 5.0, image: "🏎️" },
-    { id: "t4", name: "Chauffeur Service", provider: "UBER" as const, price: "€120.00", eta: "20 min", rating: 5.0, image: "👔" },
+    { id: "t1", name: "Uber Black", provider: "UBER" as const, price: "€25.00", eta: "4 min", rating: 4.9, image: Car },
+    { id: "t2", name: "Bolt Premium", provider: "BOLT" as const, price: "€22.50", eta: "6 min", rating: 4.8, image: Car },
+    { id: "t3", name: "Executive Limo", provider: "FREE_NOW" as const, price: "€85.00", eta: "15 min", rating: 5.0, image: Rocket },
+    { id: "t4", name: "Chauffeur Service", provider: "UBER" as const, price: "€120.00", eta: "20 min", rating: 5.0, image: User },
   ],
   restaurants: [
-    { id: "r1", name: "Alma", cuisine: "Portuguese Modern", rating: 4.9, time: "19:30", image: "🍽️" },
-    { id: "r2", name: "Belcanto", cuisine: "Contemporary", rating: 5.0, time: "20:00", image: "🍷" },
-    { id: "r3", name: "JNcQUOI", cuisine: "Luxury Dining", rating: 4.7, time: "21:00", image: "🍸" },
-    { id: "r4", name: "Eleven", cuisine: "Fine Dining", rating: 4.8, time: "19:00", image: "🕯️" },
+    { id: "r1", name: "Alma", cuisine: "Portuguese Modern", rating: 4.9, time: "19:30", image: CookingPot },
+    { id: "r2", name: "Belcanto", cuisine: "Contemporary", rating: 5.0, time: "20:00", image: Wine },
+    { id: "r3", name: "JNcQUOI", cuisine: "Luxury Dining", rating: 4.7, time: "21:00", image: Utensils },
+    { id: "r4", name: "Eleven", cuisine: "Fine Dining", rating: 4.8, time: "19:00", image: Landmark },
   ],
   hotels: [
-    { id: "h1", name: "Four Seasons", price: "€650/night", rating: 4.9, perks: "Spa & View", image: "🏨" },
-    { id: "h2", name: "Ritz-Carlton", price: "€580/night", rating: 4.8, perks: "Rooftop Pool", image: "🏙️" },
-    { id: "h3", name: "Bairro Alto Hotel", price: "€420/night", rating: 4.7, perks: "Historic Center", image: "🏛️" },
-    { id: "h4", name: "Tivoli Avenida", price: "€390/night", rating: 4.6, perks: "Luxury Suite", image: "🌆" },
+    { id: "h1", name: "Four Seasons", price: "€650/night", rating: 4.9, perks: "Spa & View", image: Hotel },
+    { id: "h2", name: "Ritz-Carlton", price: "€580/night", rating: 4.8, perks: "Rooftop Pool", image: Building2 },
+    { id: "h3", name: "Bairro Alto Hotel", price: "€420/night", rating: 4.7, perks: "Historic Center", image: Landmark },
+    { id: "h4", name: "Tivoli Avenida", price: "€390/night", rating: 4.6, perks: "Luxury Suite", image: Building },
   ],
   family: [
-    { id: "f1", name: "Elite Nanny", detail: "Bilingual • CPR Cert", rating: 5.0, status: "Available", image: "🍼" },
-    { id: "f2", name: "Health Passport", detail: "Global VIP Coverage", rating: 4.9, status: "Active", image: "🏥" },
-    { id: "f3", name: "School Advisor", detail: "Top 10 Placement", rating: 5.0, status: "Assigned", image: "🎓" },
+    { id: "f1", name: "Elite Nanny", detail: "Bilingual • CPR Cert", rating: 5.0, status: "Available", image: Baby },
+    { id: "f2", name: "Health Passport", detail: "Global VIP Coverage", rating: 4.9, status: "Active", image: HeartPulse },
+    { id: "f3", name: "School Advisor", detail: "Top 10 Placement", rating: 5.0, status: "Assigned", image: GraduationCap },
   ],
   mobility: [
-    { id: "m1", name: "NetJets Charter", detail: "Lisbon - London", rating: 5.0, price: "€ 4.5k/hr", image: "🛩️" },
-    { id: "m2", name: "Yacht Rental", detail: "Ocean Independence", rating: 4.9, price: "€ 15k/day", image: "🚤" },
-    { id: "m3", name: "Heli-Taxi", detail: "Cascais Transfer", rating: 4.8, price: "€ 850", image: "🚁" },
+    { id: "m1", name: "NetJets Charter", detail: "Lisbon - London", rating: 5.0, price: "€ 4.5k/hr", image: Plane },
+    { id: "m2", name: "Yacht Rental", detail: "Ocean Independence", rating: 4.9, price: "€ 15k/day", image: Ship },
+    { id: "m3", name: "Heli-Taxi", detail: "Cascais Transfer", rating: 4.8, price: "€ 850", image: Wind },
   ],
   pets: [
-    { id: "p1", name: "VIP Pet Spa", detail: "Full Grooming • Chiado", rating: 4.9, status: "Booked", image: "🐩" },
-    { id: "p2", name: "Pet Relocation", detail: "Global Door-to-Door", rating: 5.0, status: "Ready", image: "✈️" },
-    { id: "p3", name: "Dog Concierge", detail: "Training & Walking", rating: 4.7, status: "Available", image: "🐕" },
+    { id: "p1", name: "VIP Pet Spa", detail: "Full Grooming • Chiado", rating: 4.9, status: "Booked", image: Dog },
+    { id: "p2", name: "Pet Relocation", detail: "Global Door-to-Door", rating: 5.0, status: "Ready", image: PlaneTakeoff },
+    { id: "p3", name: "Dog Concierge", detail: "Training & Walking", rating: 4.7, status: "Available", image: Dog },
   ]
 };
 
@@ -74,72 +90,75 @@ const Swimlane = ({ title, items, onAction, actionIcon: ActionIcon, categoryIcon
 
   return (
     <div className="space-y-6 py-8 border-t border-white/5 first:border-t-0">
-      <div className="flex items-center justify-between px-4 sm:px-0">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           {CategoryIcon && <div className="p-2 rounded-xl bg-gold/10 text-gold"><CategoryIcon size={20} /></div>}
           <h2 className="text-xl font-black tracking-tight gold-gradient-text uppercase tracking-[0.2em]">{title}</h2>
         </div>
         <button className="text-[10px] font-black uppercase tracking-widest text-gold/60 hover:text-gold flex items-center gap-1 transition-all group">
-          Browse All <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+          BROWSE ALL <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
         </button>
       </div>
       
       <div 
         ref={scrollRef}
-        className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide px-4 sm:px-0"
+        className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        {items.map((item: any, idx: number) => (
-          <motion.div
-            key={item.id}
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: idx * 0.1 }}
-            whileHover={{ y: -8 }}
-            className="flex-shrink-0"
-          >
-            <GlassCard className="w-64 h-80 p-0 overflow-hidden relative group border-white/5 hover:border-gold/40">
-              {/* Background Decoration */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-gold/10 transition-colors" />
-              
-              {/* Image/Icon Area */}
-              <div className="h-40 flex items-center justify-center text-7xl bg-white/[0.02] group-hover:bg-white/[0.05] transition-colors relative">
-                <span className="drop-shadow-2xl">{item.image}</span>
-                {item.status === "Active" && (
-                   <div className="absolute top-4 right-4 flex items-center gap-1 px-2 py-1 rounded-full bg-green-500/20 text-green-400 text-[8px] font-black uppercase tracking-tighter border border-green-500/30">
-                     <div className="w-1 h-1 rounded-full bg-green-400 animate-pulse" />
-                     Live
-                   </div>
-                )}
-              </div>
-
-              {/* Content */}
-              <div className="p-6 relative z-20 flex flex-col justify-between h-40">
-                <div>
-                  <h3 className="font-bold text-lg leading-tight group-hover:text-gold transition-colors">{item.name}</h3>
-                  <p className="text-xs text-white/50 mt-2 font-medium">
-                    {item.detail || item.cuisine || item.perks || `${item.eta} • ${item.price}`}
-                  </p>
-                </div>
+        {items.map((item: any, idx: number) => {
+          const Icon = item.image as ElementType;
+          return (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              whileHover={{ y: -8 }}
+              className="flex-shrink-0"
+            >
+              <GlassCard className="w-64 h-80 p-0 overflow-hidden relative group border-white/5 hover:border-gold/40">
+                {/* Background Decoration */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-gold/10 transition-colors" />
                 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1">
-                    <Star size={12} className="text-gold fill-gold" />
-                    <span className="text-xs font-bold tabular-nums">{item.rating}</span>
+                {/* Image/Icon Area */}
+                <div className="h-40 flex items-center justify-center text-white/80 bg-white/[0.02] group-hover:bg-white/[0.05] transition-colors relative">
+                  <Icon size={64} strokeWidth={1} className="drop-shadow-2xl" />
+                  {item.status === "Active" && (
+                     <div className="absolute top-4 right-4 flex items-center gap-1 px-2 py-1 rounded-full bg-green-500/20 text-green-400 text-[8px] font-black uppercase tracking-tighter border border-green-500/30">
+                       <div className="w-1 h-1 rounded-full bg-green-400 animate-pulse" />
+                       Live
+                     </div>
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className="p-6 relative z-20 flex flex-col justify-between h-40">
+                  <div>
+                    <h3 className="font-bold text-lg leading-tight group-hover:text-gold transition-colors">{item.name}</h3>
+                    <p className="text-xs text-white/50 mt-2 font-medium">
+                      {item.detail || item.cuisine || item.perks || `${item.eta} • ${item.price}`}
+                    </p>
                   </div>
                   
-                  <button 
-                    onClick={() => onAction(item)}
-                    className="p-3 rounded-2xl bg-white/5 hover:bg-gold text-white/60 hover:text-black transition-all duration-300 border border-white/10 hover:border-gold"
-                  >
-                    <ActionIcon size={18} />
-                  </button>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1">
+                      <Star size={12} className="text-gold fill-gold" />
+                      <span className="text-xs font-bold tabular-nums">{item.rating}</span>
+                    </div>
+                    
+                    <button 
+                      onClick={() => onAction(item)}
+                      className="p-3 rounded-2xl bg-white/5 hover:bg-gold text-white/60 hover:text-black transition-all duration-300 border border-white/10 hover:border-gold"
+                    >
+                      <ActionIcon size={18} />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </GlassCard>
-          </motion.div>
-        ))}
+              </GlassCard>
+            </motion.div>
+          )
+        })}
         
         {/* View All Card */}
         <motion.div 
@@ -410,7 +429,8 @@ export default function Dashboard() {
               ...p,
               name: p.title,
               detail: `${p.type} • ${p.features.join(", ")}`,
-              rating: 5.0 // Properties are always top tier
+              rating: 5.0,
+              image: Home
             }))} 
             onAction={() => {}}
             actionIcon={ChevronRight}
@@ -434,9 +454,9 @@ export default function Dashboard() {
           <Swimlane 
             title="Quantum Treasury" 
             items={[
-              { id: "t1", name: "Tax Optimization", detail: treasury?.recommendations[0], rating: 5.0, image: "⚖️" },
-              { id: "t2", name: "Yield Farming", detail: "Crypto Strategy Alpha", rating: 4.8, image: "🚜" },
-              { id: "t3", name: "Offshore Setup", detail: "Cayman/BVI Solutions", rating: 5.0, image: "🏝️" },
+              { id: "t1", name: "Tax Optimization", detail: treasury?.recommendations[0], rating: 5.0, image: Scale },
+              { id: "t2", name: "Yield Farming", detail: "Crypto Strategy Alpha", rating: 4.8, image: Tractor },
+              { id: "t3", name: "Offshore Setup", detail: "Cayman/BVI Solutions", rating: 5.0, image: Palmtree },
             ]} 
             onAction={() => {}}
             actionIcon={TrendingUp}

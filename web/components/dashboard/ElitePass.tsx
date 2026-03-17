@@ -49,7 +49,7 @@ export const ElitePass = () => {
               <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center transition-colors group-hover/badge:border-gold/50">
                 <badge.icon size={24} className={`${badge.color} group-hover/badge:scale-110 transition-transform`} />
               </div>
-              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/badge:opacity-100 transition-opacity whitespace-nowrap">
+              <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/badge:opacity-100 transition-opacity whitespace-nowrap">
                 <span className="text-[10px] font-bold uppercase tracking-widest">{badge.label}</span>
               </div>
             </motion.div>
